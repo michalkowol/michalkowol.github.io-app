@@ -62,5 +62,6 @@
   gulp.task('dist', function (callback) {
     runSequence('build', 'usemin', 'clean-dist-bower', callback);
   });
-  gulp.task('default', ['build', 'connect', 'watch']);
+  gulp.task('server', ['build', 'connect', 'watch']);
+  gulp.task('default', ['dist']);
 })();
