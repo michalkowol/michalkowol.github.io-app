@@ -1,8 +1,9 @@
 {
-    "name": "michalkowol.github.io",
-    "version": "1.0.0",
-    "homepage": "http://michalkowol.github.io",
-    "dependencies": {
-    	"bootstrap": "3.2.x"
-    }
+  "name": "michalkowol.github.io",
+  "version": "1.0.0",
+  "homepage": "http://michalkowol.github.io",
+  "dependencies": {
+    "bootstrap": "3.2.x",
+    "jquery": "2.1.x"
+  }
 }
