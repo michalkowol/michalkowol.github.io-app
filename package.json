@@ -13,10 +13,9 @@
     "nib": "1.0.x",
     "gulp-minify-css": "0.3.x",
     "gulp-uglify": "1.0.x",
-    "gulp-minify-html": "0.1.x",
     "gulp-autoprefixer": "1.0.x",
     "gulp-connect": "2.0.x",
-    "gulp-clean": "0.3.x",
+    "del": "0.1.x",
     "run-sequence": "1.0.x",
     "jshint-stylish": "1.0.x"
   },

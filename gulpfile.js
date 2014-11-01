@@ -11,10 +11,9 @@
   var prefix = require('gulp-autoprefixer');
   var uglify = require('gulp-uglify');
   var minifycss = require('gulp-minify-css');
-  var minifyhtml = require('gulp-minify-html');
   var connect = require('gulp-connect');
   var runSequence = require('run-sequence');
-  var clean = require('gulp-clean');
+  var del = require('del');
 
   gulp.task('jade', function () {
     return gulp.src('app/**/*.jade')
@@ -68,7 +67,6 @@
     return gulp.src('dist/**/*.html')
       .pipe(usemin({
         css: [minifycss(), 'concat', prefix('last 2 versions')],
-        html: [minifyhtml({empty: true})],
         js: [uglify()]
       }))
       .pipe(gulp.dest('dist'));
@@ -82,14 +80,12 @@
     });
   });
 
-  gulp.task('clean', function () {
-    return gulp.src(['dist'], {read: false})
-      .pipe(clean());
+  gulp.task('clean', function (callback) {
+    del(['dist'], callback)
   });
 
-  gulp.task('clean-bower', function () {
-    return gulp.src(['dist/bower_components'], {read: false})
-      .pipe(clean());
+  gulp.task('clean-bower', function (callback) {
+    del(['dist/bower_components'], callback)
   });
 
   gulp.task('watch', function () {
