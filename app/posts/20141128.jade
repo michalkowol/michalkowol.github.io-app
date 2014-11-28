@@ -1,0 +1,91 @@
+h1 Scala (notes)
+div.panel.panel-default
+  div.panel-heading
+  div.panel-body
+    h4 Functions without parameters
+    div
+      script(src="https://gist.github.com/michalkowol/8c9682823103c6813097.js")
+      div The first one is better, bacause you can easly replace it with <code>val</code>.
+    h4 Default parameters
+    script(src="https://gist.github.com/michalkowol/ec5c78769d9aab576d84.js")
+    h4 Public API
+    div If we define public API, all methods and parameters should have explicite type.
+    h4 Operators
+    div
+      script(src="https://gist.github.com/michalkowol/ccfc2bdb0bb0a90dec56.js")
+      div To be consisten:
+      ul
+        li all operators like <code>+, !, -</code>, etc should be used with infix notation
+        li in other cases we <b>shoudl</b> use dot notation.
+    h4 Named parameters
+    div
+      script(src="https://gist.github.com/michalkowol/fe5d0b8fa16a6857a2eb.js")
+      div When we have a lot of parameters (especially with the same type - integers and strings), we should used named parameters (classes, methods). It makes code more readable and more expressibler.
+    h4 Imports in block is ok
+    div If you need import only in one function import it in function body.
+    h4 Private access modifiers in Scala
+    div
+      script(src="https://gist.github.com/michalkowol/fe5d0b8fa16a6857a2eb.js")
+      <code>private [this]</code> is very restrict. You can use package access modifier (it could be good for tests).
+    h4 Extending <code>App</code> or <code>main(args: Array[String])</code>
+    div Extending <code>App</code> is code for prototyping. In production you should use <code>main</code>. Why?
+      ul
+        li Whole object body is treatead as main
+        li You don't hava access to <code>args</code>
+        li
+          blockquote.small(cite="http://www.scala-lang.org/api/current/index.html#scala.App") It should be noted that this trait is implemented using the DelayedInit functionality, which means that fields of the object will not have been initialized before the main method has been executed.
+    h4 Method copy in case classes
+    script(src="https://gist.github.com/michalkowol/0042b1d075075a483a5b.js")
+    h4 <code>List</code> vs <code>Vector</code>
+      h5 <code>List</code>
+      div List have only pointer to first element of list - it adds very fast to head of list. To add to end of list it has to iterate throught all elements (<code>O(n)</code>).
+      h5 <code>Vector</code>
+      div All operations are constant in time (even putting element in the middile of collection).
+      h5 Performance characteristics
+      div
+        div
+          img(src="img/performance.png" alt="Performance characteristics")
+        a(href="http://docs.scala-lang.org/overviews/collections/performance-characteristics.html") Performance characteristics
+    h4 <code>Seq</code> is mutable!
+    div
+      script(src="https://gist.github.com/michalkowol/c8c78a917e8a794cfdf9.js")
+      div There is one mutable subtype of <code>Seq</code>: <code>WrappedArray</code>. To be sure sequence is immutable use <code>scala.collection.immutable.Seq</code>.
+    h4 Future
+    div
+      script(src="https://gist.github.com/michalkowol/21b648b8a1fae1da8123.js")
+      div <code>Await.result</code> is blocking operation.
+    h4 Diffrence between <code>=</code> and <code>&lt;-</code> in for comprehension
+    div
+      script(src="https://gist.github.com/michalkowol/77cd21d39a09355c24f2.js")
+      div <code>&lt;-</code> will "unpack", <code>=</code> is simple assigment
+    h4 <code>Try</code> object/trait
+    div
+      script(src="https://gist.github.com/michalkowol/e9446d855e33a5b6ce7c.js")
+      div In <a href="http://www.scalactic.org/">scalactic</a> you can use <code>String Or ErrorMessage</code> (<code>Good(...)</code>, <code>Bad(...)</code> subclasses).
+    h4 <code>if</code> in for-comprehension
+    div
+      script(src="https://gist.github.com/michalkowol/e5e68fd31c78bf766506.js")
+      div You can use <code>if</code> in for-comprehension.
+      div Every for-comprehension can be replaced with <code>flatMap</code> and <code>map</code> (outer iteration is <code>flatMap</code>).
+    h4 <code>filter</code> vs <code>withFilter</code>
+    div
+      div <code>filter</code> always returns collections, but <code>withFilter</code> return generator. You can "join" join many generators.
+      div You should <code>withFilter</code> when you have many filters.
+    h4 Class modifiers
+    ul
+      li <code>final class Animal</code> you cannnot extend Animal
+      li <code>sealed</code> All subtypes must be defined in this file. <code>sealed</code> should be define when you use <a href="http://en.wikipedia.org/wiki/Algebraic_data_type">ADT (algebraic data types)</a>. <code>sealed</code> is very helpfull in pattern matching.
+    h4 Traits linearization
+    script(src="https://gist.github.com/michalkowol/8c329a089e5b1bcdd51a.js")
+    h4 Const Pattern Mattching
+    script(src="https://gist.github.com/michalkowol/e334f8bafff000e11549.js")
+    h4 Others
+    ul
+      li In subclass you can replace <code>def</code> with <code>val</code>.
+      li There is type <code>Either</code> and <code>Options</code> - very usefull to handle errors or null pointers.
+      li <code>lazy val</code> can coused some problems. Instead of <code>lazy val</code> maybe yhou should use <code>def</code>.
+      li <code>s"..."</code> string interpolation, <code>f"..."</code> formating <code>f"$value%02x"</code> (300 -&gt; 12c).
+      li <code>trait</code> or <code>abstract class</code>? In most cases <code>trait</code> is better. The only reason to use <code>abstract class</code> is when we have to use constructor params.
+      li If we ovverride method, it should call <code>super</code>.
+
+
