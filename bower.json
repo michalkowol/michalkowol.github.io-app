@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "homepage": "http://michalkowol.github.io",
   "dependencies": {
-    "bootstrap": "3.2.x",
+    "bootstrap": "3.3.x",
     "jquery": "2.1.x"
   }
 }
