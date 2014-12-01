@@ -3,16 +3,18 @@ div.panel.panel-default
   div.panel-heading 2013-12-05 [Java, Spring, Bean]
   div.panel-body
     section
-      h4 Simple example:
-      div
+      header
+        h4 Simple example:
+      section
         script(src="https://gist.github.com/michalkowol/360bab621fa243e67894.js")
         div MainAppSingleton execution result:
           pre true
         div MainAppPrototype execution result:
           pre false
     section
-      h4 Konstruktory i rozwiązywanie konfliktów
-      div
+      header
+        h4 Konstruktory i rozwiązywanie konfliktów
+      section
         script(src="https://gist.github.com/michalkowol/dac25151507ca255a296.js")
         div With <code>bean1.xml</code>
           pre.
@@ -23,14 +25,20 @@ div.panel.panel-default
             Test.type = md5
             Test.password= xhajs
     section
-      h4 Factories
+      header
+        h4 Factories
+      section
         script(src="https://gist.github.com/michalkowol/e45946dfe420ca729d1e.js")
-      div Result:
-        pre Eating a banana: omomom
-      div Plum with name:
-        script(src="https://gist.github.com/michalkowol/e98f76938ac98ccb0d26.js")
-        pre Eating a plum sliwka: omomom
-      div Plum by name using <code>createFruit</code> method:
-        script(src="https://gist.github.com/michalkowol/4281a064f1daa72934b1.js")
-        pre Eating a plum defaultName: omomom
+    section
+      header
+        h4 Result:
+      section
+        div
+          pre Eating a banana: omomom
+        div Plum with name:
+          script(src="https://gist.github.com/michalkowol/e98f76938ac98ccb0d26.js")
+          pre Eating a plum sliwka: omomom
+        div Plum by name using <code>createFruit</code> method:
+          script(src="https://gist.github.com/michalkowol/4281a064f1daa72934b1.js")
+          pre Eating a plum defaultName: omomom
 
