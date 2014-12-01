@@ -66,6 +66,11 @@ div.panel.panel-default
             script(src="https://gist.github.com/michalkowol/2891404a089231f3b851.js")
     section
       header
+        h4 Actor DSL
+      section To create anonymous actoes we can use <a href="http://doc.akka.io/docs/akka/2.3.0-RC1/scala/actordsl.html">Actor DSL</a>. Here, <code>actor</code> takes the role of either <code>system.actorOf</code> or <code>context.actorOf</code>. It takes an implicit <code>ActorRefFactory</code> and creates the new Actor.
+        script(src="https://gist.github.com/michalkowol/6cd33c2cc49ddaccdd9c.js")
+    section
+      header
         h4 Best practices
       section
         ul
