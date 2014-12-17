@@ -4,6 +4,7 @@
   "homepage": "http://michalkowol.github.io",
   "dependencies": {
     "bootstrap": "3.3.x",
-    "jquery": "2.1.x"
+    "jquery": "2.1.x",
+    "highlightjs": "8.x"
   }
 }

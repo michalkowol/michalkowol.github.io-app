@@ -32,7 +32,13 @@
     return gulp.src('app/js/app.js')
       .pipe(browserify({
         insertGlobals: true,
-        debug: true
+        debug: true,
+        shim: {
+          highlight: {
+            path: 'app/bower_components/highlightjs/highlight.pack.js',
+            exports: 'hljs'
+          }
+        }
       }))
       .pipe(gulp.dest('dist/js'))
       .pipe(connect.reload());
