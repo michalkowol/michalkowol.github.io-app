@@ -99,6 +99,7 @@
     gulp.watch(['app/**/*.css'], ['css']);
     gulp.watch(['app/**/*.js'], ['js']);
     gulp.watch(['app/**/*.styl'], ['stylus']);
+    gulp.watch(['app/img/**'], ['img']);
   });
 
   gulp.task('build', ['img', 'jade', 'js', 'css', 'stylus']);

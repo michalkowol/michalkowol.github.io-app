@@ -6,7 +6,7 @@ div.panel.panel-default
       header
         h4 Akka traits
       section
-        img(src="img/reactive-traits.svg" alt="Akka traits" width="40%")
+        img(src="img/reactive-traits.svg" alt="Akka traits" style="max-width: 40%")
         div Akka has 4 main traits. Those are:
           ul
             li Responsive - the system responds very fast.
@@ -28,12 +28,18 @@ div.panel.panel-default
             li <strong>Concurrency</strong> A condition that exists when at least two threads are making progress. A more generalized form of parallelism that can include time-slicing as a form of virtual parallelism.
             li <strong>Parallelism</strong> A condition that arises when at least two threads are executing simultaneously.
         div Ref: <a href="http://stackoverflow.com/questions/1050222/concurrency-vs-parallelism-what-is-the-difference">http://stackoverflow.com/</a>.
+        div Example
+          ul
+            li <strong>Concurrency</strong> - two queues, one coffee machine
+            li <strong>Parallelism</strong> - two queues, two coffee machines
+          img(src="img/20141201/con_and_par.jpg" alt="Concurrency vs Parallelism")
+          div Source: <a href="http://joearms.github.io/2013/04/05/concurrent-and-parallel-programming.html">http://joearms.github.io/</a>
     section
       header
         h4 Actor, ActorRef
       section
         div
-          img(src="img/actor-ref.png" alt="Actor with Mailbox" width="40%")
+          img(src="img/actor-ref.png" alt="Actor with Mailbox" style="max-width: 40%")
           ul
             li Each actor has dispatcher and mailbox.
             li If we send message to actor, it will add message to its mailbox and it will return <strong>immediately</strong> - this is not blocking operation.
@@ -48,14 +54,16 @@ div.panel.panel-default
       header
         h4 How to handle "unhandled" messages
       section If in receive block we do not handle some message, this message will be dropped (and maybe logged). We can use <code>unhandled</code> method to do something with messages not handled in receive block.
-        pre override def unhandled(message: Any): Unit = ???
+        pre
+          code.scala override def unhandled(message: Any): Unit = ???
     section
       header
         h4 Top-Level Actor
       section If you create top-level actors, use factory methods - it will simplify testing. Always give name to your top-level actors.
-        pre.
-          val topLevelActor = createTopLevelActor()
-          def createTopLevelActor(): ActorRef = system.actorOf(TopLevel.props, "top-level")
+        pre
+          code.scala.
+            val topLevelActor = createTopLevelActor()
+            def createTopLevelActor(): ActorRef = system.actorOf(TopLevel.props, "top-level")
     section
       header
         h4 Message protocol
@@ -63,12 +71,16 @@ div.panel.panel-default
         ul
           li Defince your message protocol in the companion object of the actor.
           li If you use message protocol from other actor, use actor name as prefix to this message - this will make code more readable.
-            script(src="https://gist.github.com/michalkowol/2891404a089231f3b851.js")
+          pre
+            code.scala
+              include MessageProtocol.scala
     section
       header
         h4 Actor DSL
       section To create anonymous actoes we can use <a href="http://doc.akka.io/docs/akka/2.3.0-RC1/scala/actordsl.html">Actor DSL</a>. Here, <code>actor</code> takes the role of either <code>system.actorOf</code> or <code>context.actorOf</code>. It takes an implicit <code>ActorRefFactory</code> and creates the new Actor.
-        script(src="https://gist.github.com/michalkowol/6cd33c2cc49ddaccdd9c.js")
+        pre
+          code.scala
+            include ActorDSL.scala
     section
       header
         h4 Best practices
@@ -77,11 +89,6 @@ div.panel.panel-default
           li Always create <code>Props</code> factory - the best place for that is in companion object (see: <a href="http://doc.akka.io/docs/akka/snapshot/scala/actors.html">Actors &mdash; Akka Documentation</a>).
           li Put Companion Object before you class.
           li Use <code>sender()</code> <strong>with</strong> parentheses. It is function, not val and you have to rember about it. It can be very tricky when sender() will be execute in other thread - in example in <code>Future</code>. Example:
-            script(src="https://gist.github.com/michalkowol/9ae423ab2c44f28933f3.js")
-    section
-      header
-        h4 TestCode
-      section
-        pre
-          code.scala
-            include Good.scala
+            pre
+              code.scala
+                include SenderInFuture.scala
