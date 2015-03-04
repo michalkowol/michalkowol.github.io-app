@@ -1,0 +1,4 @@
+<bean id="test" class="Test">
+    <constructor-arg value="xhajs" />
+    <constructor-arg value="md5" />
+</bean>

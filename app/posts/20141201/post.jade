@@ -1,3 +1,5 @@
+include ../escape.jade
+
 h1 Akka (notes, part 1)
 div.panel.panel-default
   div.panel-heading 2014-12-01 [Scala, Akka]
@@ -73,14 +75,16 @@ div.panel.panel-default
           li If you use message protocol from other actor, use actor name as prefix to this message - this will make code more readable.
           pre
             code.scala
-              include MessageProtocol.scala
+              +escape()
+                include code/MessageProtocol.scala
     section
       header
         h4 Actor DSL
       section To create anonymous actoes we can use <a href="http://doc.akka.io/docs/akka/2.3.0-RC1/scala/actordsl.html">Actor DSL</a>. Here, <code>actor</code> takes the role of either <code>system.actorOf</code> or <code>context.actorOf</code>. It takes an implicit <code>ActorRefFactory</code> and creates the new Actor.
         pre
           code.scala
-            include ActorDSL.scala
+            +escape()
+              include code/ActorDSL.scala
     section
       header
         h4 Best practices
@@ -91,4 +95,5 @@ div.panel.panel-default
           li Use <code>sender()</code> <strong>with</strong> parentheses. It is function, not val and you have to rember about it. It can be very tricky when sender() will be execute in other thread - in example in <code>Future</code>. Example:
             pre
               code.scala
-                include SenderInFuture.scala
+                +escape()
+                  include code/SenderInFuture.scala

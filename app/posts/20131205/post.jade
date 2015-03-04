@@ -1,3 +1,5 @@
+include ../escape.jade
+
 h1 Java with Spring
 div.panel.panel-default
   div.panel-heading 2013-12-05 [Java, Spring, Bean]
@@ -6,7 +8,26 @@ div.panel.panel-default
       header
         h4 Simple example:
       section
-        script(src="https://gist.github.com/michalkowol/360bab621fa243e67894.js")
+        pre
+          code.java
+            +escape()
+              include code/Classes.java
+        pre
+          code.java
+            +escape()
+              include code/MainAppPrototype.java
+        pre
+          code.java
+            +escape()
+              include code/MainAppSingleton.java
+        pre
+          code.xml
+            +escape()
+              include code/beans_1.xml
+        pre
+          code.xml
+            +escape()
+              include code/beans_prototype.xml
         div MainAppSingleton execution result:
           pre true
         div MainAppPrototype execution result:

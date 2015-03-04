@@ -9,6 +9,10 @@ module.exports = (function () {
             return "foo";
         };
 
+        self.bar = function () {
+            return "bar";
+        };
+
         return self;
     };
 
