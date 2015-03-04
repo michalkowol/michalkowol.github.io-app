@@ -70,7 +70,7 @@
   });
 
   gulp.task('usemin', function () {
-    return gulp.src('dist/**/*.html')
+    return gulp.src('dist/*.html')
       .pipe(usemin({
         css: [minifycss(), 'concat', prefix()],
         js: [uglify()]
