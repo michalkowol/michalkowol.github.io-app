@@ -1,4 +1,0 @@
-<!-- singleton -->
-<!-- ... -->
-<bean id="juicer" class="Juicer" scope="prototype">
-<!-- ... -->

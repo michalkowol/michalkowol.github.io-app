@@ -1,2 +1,0 @@
-@echo off
-npm start && cd dist && git clone https://github.com/michalkowol/michalkowol.github.io.git git && cd git && mv .git .. && cd .. && rm -rf git && git add --all && git commit -m "NT New post" && git push && cd ..

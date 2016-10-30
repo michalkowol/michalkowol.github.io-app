@@ -1,3 +1,0 @@
-<bean id="fruit" class="Fruits" factory-method="createFruit">
-    <constructor-arg value="sliwka"></constructor-arg>
-</bean>
