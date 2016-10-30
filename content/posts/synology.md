@@ -1,8 +1,8 @@
 +++
-draft = true
+draft = false
 date = "2016-10-29"
 title = "Synology ssh with public key"
-categories = ["random", "tech"]
+categories = ["tech"]
 tags = ["synology", "ssh", "rsync"]
 +++
 

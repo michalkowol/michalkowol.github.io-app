@@ -19,6 +19,10 @@ theme = "hyde"
   name = "Development"
   url = "/categories/development"
 
+[[menu.main]]
+  name = "GitHub Projects"
+  url = "https://github.com/michalkowol"
+
 [[menu.social]]
   pre = "<i class='fa fa-twitter'></i>"
   url = "http://www.twitter.com/michalkowol"
