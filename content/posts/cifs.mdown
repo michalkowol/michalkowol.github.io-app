@@ -1,0 +1,72 @@
++++
+draft = false
+date = "2016-11-07"
+title = "How to server cifi shared folder using nginx"
+categories = ["tech", "howto"]
+tags = ["tech", "howto", "cifi", "linux", "smb", "samba", "nginx"]
++++
+
+## Setup
+
+Create folder `/media/storage/dir/`
+
+```
+mkdir -p /media/storage/dir/
+```
+
+Next, mount shared directory. `uid` and `gid` are very important because without this you will get `403 Forbidden`.
+
+```
+sudo mount -t cifs -o uid=www-data,gid=www-data,ro,username=username,password=password //10.0.0.2/shared/ /media/storage/dir/
+```
+
+* `-t cifs` - type of fs (`cifs` - Common Internet File System, also known as `smb`)
+* `uid` - specific user
+* `gid` - specific groutp
+* `ro` - read-only
+* `rw` - read-write
+* `username` - shared directory username
+* `password` - shared directory password
+
+Modify `nginx` config (`/etc/nginx/sites-available/somefile`)
+
+```
+location /{ 
+   root /media/storage/dir/; 
+   autoindex on;
+}
+```
+
+### Password protecion
+
+Add user `bob` to `.htpasswd` file using this command:
+
+```
+sudo sh -c "echo -n 'bob:' >> /etc/nginx/.htpasswd"
+```
+
+Add an encrypted password for the username:
+
+```
+sudo sh -c "openssl passwd -apr1 >> /etc/nginx/.htpasswd"
+```
+
+Add this to `ngnix` config:
+
+```
+location / { 
+  root /media/storage/dir/;
+  autoindex on;
+  auth_basic "Restricted Content";
+  auth_basic_user_file /etc/nginx/.htpasswd;
+  disable_symlinks off;
+}
+```
+
+## Links
+
+* [How To Set Up Password Authentication with Nginx](https://www.digitalocean.com/community/tutorials/how-to-set-up-password-authentication-with-nginx-on-ubuntu-14-04)
+* [How To Set Up an NFS Mount](https://www.digitalocean.com/community/tutorials/how-to-set-up-an-nfs-mount-on-ubuntu-16-04)
+* [Mounting an NFS share on Ubuntu](https://wiki.qnap.com/wiki/Mounting_an_NFS_share_on_Ubuntu)
+* [Linux - Mount device with specific user rights](http://superuser.com/questions/320415/linux-mount-device-with-specific-user-rights)
+* [Mount cifs Network Drive: write permissions and chown](http://unix.stackexchange.com/questions/68079/mount-cifs-network-drive-write-permissions-and-chown)

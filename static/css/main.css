@@ -2,7 +2,7 @@
   background-color: transparent;
 }
 
-pre, code {
+/*pre, code {
     white-space: pre;
     overflow-x: scroll;
     padding-bottom: 0;
@@ -24,7 +24,7 @@ pre, code {
     border-radius: 4px;
     background-color: rgba(0,0,0,.1);
     -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
-}
+}*/
 
 .sidebar-about h1 {
   font-size: 2.25rem;

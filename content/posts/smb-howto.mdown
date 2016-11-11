@@ -1,0 +1,113 @@
++++
+draft = false
+date = "2016-11-04"
+title = "Samba (smb)"
+description = "How to configure Samba inside your network."
+categories = ["random", "tech", "howto"]
+tags = ["random", "tech", "howto", "smb"]
++++
+
+## Configuration
+
+On Ubuntu configuration file is located in `/etc/samba/smb.conf`. You need `root` privileges to edit it.
+
+### Sample file
+
+```nohighlight
+[global]
+  workgroup = WORKGROUP
+  server string = servername
+  unix password sync = yes
+
+[homes]
+  comment = Home Directories
+  browseable = no
+  read only = no
+  writable = yes
+  guest ok = no
+  create mask = 0600
+  directory mask = 0700
+  security = user
+
+[accounting]
+  comment = Accounting Department Directory
+  writable = yes
+  valid users = @account
+  path = /media/storage/accounting
+  create mask = 0660
+  directory mode = 0770
+  force group = account
+
+[public]
+  comment = Public
+  browsable = yes
+  path = /media/storage/public
+  public = yes
+  read only = no
+  writable = yes
+  guest ok = yes
+  create mask = 0666
+  directory mode = 0777
+```
+
+You need to set public storage directory permissions to be `777 (drwxrwxrwx)` and for directories shared in group `770 (drwxrwx---)`. Don't forget to change group of shared directories with `chown -R :groupname path`.
+
+This is how we can create group `account` and add `bob` to `account`.
+
+```bash
+groupadd account
+adduser bob
+usermod -a -G account bob
+smbpasswd -a bob
+
+```
+
+#### Configuring anonymous public shares
+
+```nohighlight
+[public]
+  comment = Public
+  browsable = yes
+  path = /media/storage/public
+  public = yes
+  read only = no
+  writable = no
+  write list = bob
+  guest ok = yes
+```
+
+This sets up a share named `public` which is shown when browsing the server to any user with rights to do so. You can see it is public, but not writable except for `bob` and that it is ok for guests to login.
+
+```nohighlight
+[global]
+  # ...
+  guest account = nobody
+```
+
+Which defines the account to use when authenticating guests. Don’t forget to create this user using `smbpasswd -an nobody`. This will create the user with no password.
+
+```nohighlight
+[global]
+  #...
+  map to guest = bad user
+```
+
+This maps any unknown username to the specified guest user, so login always succeeds.
+
+## Useful commands
+
+* `sudo service smbd restart` - restarts samba server (reloads config)
+* `smbpasswd -an nobody` - creates user with no password in smb
+* `addgroup groupname` - creates new group
+* `adduser username` - creates new user
+* `usermod -a -G groupname username` - adds existing user to existing group
+* `deluser username` - deletes user
+* `chown -R :groupname path` - changes group of file/directory
+
+## Links
+
+* [Samba](https://www.samba.org/samba/docs/using_samba/ch09.html)
+* [Configuring anonymous public shares with Samba 3](https://micheljansen.org/blog/entry/182)
+* [Linux and Unix groupadd command](http://www.computerhope.com/unix/groupadd.htm)
+* [Howto: Linux Add User To Group](http://www.cyberciti.biz/faq/howto-linux-add-user-to-group/)
+* [Howto: Use chmod and chown Command](http://www.cyberciti.biz/faq/how-to-use-chmod-and-chown-command/)
