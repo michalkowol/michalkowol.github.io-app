@@ -12,10 +12,12 @@ publishdir = "public"
 pygmentsuseclasses = true
 
 [params]
-Author = "Michał Kowol"
-DateForm = "2006/01/02"
-Title = "Michał Kowol"
-Tagline = "Tech Blog"
+  Author = "Michał Kowol"
+  DateForm = "2006/01/02"
+  Title = "Michał Kowol"
+  Tagline = "Tech Blog"
+  disqusShortname = "michalkowol"
+  description = "<strong style=\"color: white;\">Michał Kowol</strong> | Tech Blog"
 
 [params.Github]
-Url = "https://github.com/michalkowol"
+  url = "https://github.com/michalkowol"
