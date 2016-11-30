@@ -1,25 +1,21 @@
 baseurl = "https://michalkowol.github.io/"
-title = "Michał Kowol | Tech Blog"
 languageCode = "en-us"
 
 theme = "lanyon-hugo"
 
+builddrafts = false
+canonifyurls = true
+contentdir = "content"
+postdir = "content"
+layoutdir = "layouts"
+publishdir = "public"
+pygmentsuseclasses = true
+
 [params]
-  author = "Michał Kowol"
-  DateForm = "2006-01-02"
-  sidebar = "Michał Kowol"
-  description = "Tech Blog"
-  themeColor = "theme-base-0d"
-  disqusShortname = "michalkowol"
+Author = "Michał Kowol"
+DateForm = "2006/01/02"
+Title = "Michał Kowol"
+Tagline = "Tech Blog"
 
-[[menu.main]]
-  name = "Blog"
-  url = "/posts"
-
-[[menu.main]]
-  name = "Development"
-  url = "/categories/development"
-
-[[menu.main]]
-  name = "GitHub Projects"
-  url = "https://github.com/michalkowol"
+[params.Github]
+Url = "https://github.com/michalkowol"
