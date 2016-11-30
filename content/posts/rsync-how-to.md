@@ -69,11 +69,12 @@ rsync -avzx --iconv=utf-8-mac,utf-8 --append-verify --progress --human-readable 
 On windows ([cwRsync](https://www.itefix.net/cwrsync))
 
 ```bash
-rsync -avzx --progress --human-readable -e "ssh -p 48419 -i c:\ssh\id_rsa" "c/dir/dir" user@hostname:~/tmp
+rsync -avzx --progress --human-readable -e "ssh -p 48419 -i c:\ssh\id_rsa" "c/dir/dir/" user@hostname:~/tmp/
 ```
 
 ### Notes
 
+* trailing `/` in directory name is **very** important - there is a big difference between `rsync dir1 dir2` and `rsync dir1/ dir2/`
 * https://www.digitalocean.com/community/tutorials/how-to-use-rsync-to-sync-local-and-remote-directories-on-a-vps
 * always use `--iconv=utf-8-mac,utf-8` when initialising the rsync from the mac
 * always use `--iconv=utf-8,utf-8-mac` when initialising the rsync from the linux

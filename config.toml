@@ -2,7 +2,7 @@ baseurl = "https://michalkowol.github.io/"
 title = "Michał Kowol | Tech Blog"
 languageCode = "en-us"
 
-theme = "hyde"
+theme = "lanyon-hugo"
 
 [params]
   author = "Michał Kowol"
