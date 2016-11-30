@@ -1,0 +1,34 @@
+{{ partial "default_head.html" . }}
+
+<article class="post">
+  <h1 class="post-title">{{ .Title }}</h1>
+  <span class="post-date">{{ .Date.Format .Site.Params.DateForm }}</span>
+  {{ if .Params.categories }}
+    <div class="post-categories">
+    {{ range .Params.categories }}
+      <a class="post-category post-category-{{ . | urlize }}" href="/categories/{{ . | urlize }}">{{ . }}</a>
+    {{ end }}
+    </div>
+  {{ end }}
+  <div class="content">
+  {{ .Content }}
+  </div>
+  <div class="tags">
+  {{ if .Params.tags }}
+    <div class="post-tags">
+    Tagged 
+    {{ range .Params.tags }}
+      <a class="post-tags post-tags-{{ . | urlize }}" href="/tags/{{ . | urlize }}">{{ . }}</a>
+    {{ end }}
+    </div>
+  {{ end }}
+  </div>
+</article>
+<div>
+{{ if and (isset .Site.Params "disqusShortname") (ne .Site.Params.disqusShortname "") }}
+  <h2>Comments</h2>
+  {{ partial "disqus" . }}
+{{ end }}
+</div>
+
+{{ partial "default_foot.html" . }}
