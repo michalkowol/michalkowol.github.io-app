@@ -1,3 +1,15 @@
+body {
+  font-size: 15px;
+}
+
+pre {
+  padding: 0;
+}
+
+pre code {
+  font-size: 13px;
+}
+
 .hljs {
   background-color: transparent;
 }

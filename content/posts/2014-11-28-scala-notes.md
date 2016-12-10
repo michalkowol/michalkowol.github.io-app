@@ -2,6 +2,7 @@
 draft = false
 date = "2014-11-28"
 title = "Scala (notes)"
+description = "Notes from \"Fast Track to Scala\"."
 categories = ["development", "scala"]
 tags = ["development", "scala"]
 +++

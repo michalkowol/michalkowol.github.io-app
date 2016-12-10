@@ -1,7 +1,7 @@
 +++
 draft = false
 date = "2016-11-07"
-title = "How to server cifi shared folder using nginx"
+title = "How to server cifi shared folder using nginx."
 categories = ["tech", "howto"]
 tags = ["tech", "howto", "cifi", "linux", "smb", "samba", "nginx"]
 +++

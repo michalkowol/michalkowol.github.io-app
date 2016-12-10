@@ -2,6 +2,7 @@
 draft = false
 date = "2013-11-22"
 title = "Java puzzle"
+description = "Java Puzzles. Initialization order."
 categories = ["development", "java"]
 tags = ["development", "java", "puzzle"]
 +++

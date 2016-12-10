@@ -1,6 +1,6 @@
 +++
 draft = false
-date = "2016-10-30T20:36:56+01:00"
+date = "2016-10-30"
 title = "How to: rsync"
 description = "How to use rsync with ssh on diffrent port."
 categories = ["tech", "howto"]

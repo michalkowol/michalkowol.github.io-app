@@ -2,6 +2,7 @@
 draft = false
 date = "2014-07-22"
 title = "\"Closures\" in JavaScript"
+description = "Closures in JS can simulate classes. Polymorphism, encapsulation and inheritance are avilable in this aproach."
 categories = ["development", "javascript"]
 tags = ["development", "javascript"]
 +++

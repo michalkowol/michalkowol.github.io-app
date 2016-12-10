@@ -2,6 +2,7 @@
 draft = false
 date = "2014-04-24"
 title = "\"Classes\" and Singletions in JavaScript"
+description = "How to simulate Object Oriented programming in JavaScript."
 categories = ["development", "javascript"]
 tags = ["development", "javascript", "trait"]
 +++
@@ -29,7 +30,7 @@ com.MTVClass1 = function (videoID) {
 com.MTVClass1("123").foo();
 ```
 
-```javascipt
+```javascript
 var com = com || {};
  
 (function () {
@@ -51,7 +52,7 @@ var com = com || {};
 new com.MTVClass2("1234").foo();
 ```
 
-```javascipt
+```javascript
 var com = com || {};
  
 com.MTVClass3 = (function () {

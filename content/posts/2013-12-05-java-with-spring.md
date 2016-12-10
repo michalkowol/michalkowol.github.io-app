@@ -2,6 +2,7 @@
 draft = false
 date = "2013-12-05"
 title = "Java with Spring"
+description = "How to use Spring for Dependency Injection. XML Beans. Different DI scopes."
 categories = ["development", "java"]
 tags = ["development", "java", "spring", "bean"]
 +++
@@ -66,7 +67,9 @@ public class Juicer {
         this.peeler = peeler;
     }
 }
-view rawClasses.java hosted with ❤ by GitHub
+```
+
+```java
 public class MainAppPrototype {
     public static void main(String[] args) {
         ApplicationContext context = new ClassPathXmlApplicationContext("beans_prototype.xml");
@@ -75,7 +78,9 @@ public class MainAppPrototype {
         System.out.println(j1 == j2);
     }
 }
-view rawMainAppPrototype.java hosted with ❤ by GitHub
+```
+
+```java
 public class MainAppSingleton {
     public static void main(String[] args) {
         ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
@@ -233,9 +238,17 @@ Plum with name:
 <bean id="fruit" class="Fruits" factory-method="newPlum">
     <constructor-arg value="sliwka"></constructor-arg>
 </bean>
-view rawbeans.xml hosted with ❤ by GitHub
+```
+
+Result:
+
+```
 Eating a plum sliwka: omomom
+```
+
 Plum by name using createFruit method:
+
+```xml
 <bean id="fruit" class="Fruits" factory-method="createFruit">
     <constructor-arg value="sliwka"></constructor-arg>
 </bean>

@@ -1,7 +1,8 @@
 +++
 draft = false
 date = "2014-10-23"
-title = "Scala traits in javascript"
+title = "Scala Traits in JavaScript"
+description = "How to simulate Scala Traits in JavaScript."
 categories = ["development", "javascript"]
 tags = ["development", "javascript", "scala"]
 +++

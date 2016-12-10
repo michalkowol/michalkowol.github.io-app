@@ -2,6 +2,7 @@
 draft = false
 date = "2016-11-07"
 title = "/boot 100% and can't purge"
+description = "Hot to fix problem with full /boot."
 categories = ["tech", "howto"]
 tags = ["tech", "howto", "linux", "boot", "header"]
 +++
