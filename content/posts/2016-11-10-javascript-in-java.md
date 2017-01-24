@@ -1,9 +1,9 @@
 +++
 draft = true
-date = "3016-11-10"
-title = "How to run JavaScript on JVM (TODO)"
+date = "2016-11-10"
+title = "How to run JavaScript on JVM"
 description = "Hot to run JavaScript on JVM using Nashorn to run user custom code."
-categories = ["development", "java"]
+categories = ["development", "java", "todo"]
 tags = ["development", "java", "jdk", "javascript", "nashorn"]
 +++
 

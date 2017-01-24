@@ -1,8 +1,8 @@
 +++
 draft = true
-date = "3016-11-17"
-title = "Maven Release Plugin (TODO)"
-categories = ["development", "java"]
+date = "2016-11-17"
+title = "Maven Release Plugin"
+categories = ["development", "java", "todo"]
 tags = ["development", "java", "mvn", "git", "maven plugin"]
 +++
 

@@ -25,51 +25,65 @@ rsync selected options
 --progress This option tells rsync to print information showing the progress of the transfer.
 --human-readable Output numbers in a more human-readable format.
 --append-verify Append w/old data in file checksum
+--protect-args This option sends all filenames and most options to the remote rsync without allowing the remote shell to interpret them. This means that spaces are not split in names, and any non-wildcard special characters are not translated (such as ~, $, ;, &, etc.). Wildcards are expanded on the remote host by rsync (instead of the shell doing it)
+--exclude-from Exclude files or directories from given file
+--max-size=300mb Don't transfer any file larger than SIZE
 ```
 
 ### Examples
 
-Simple examples
+#### Simple examples
 
 ```bash
 # without ssh
 rsync -avzx . user@hostname::NetBackup/owncloud
 # with ssh
 rsync -avzx -e ssh . user@hostname:~/tmp
-# with ssh (from server to client)
-rsync -avzx -e ssh user@hostname:~/tmp .
-
 ```
 
-More advanced examples
+#### More advanced examples
 
 ```bash
-# with dry run (no changes - files would be deleted on server after success)
+# with dry run (no changes - files are not deleted on server)
 rsync -avzx --dry-run --delete-after -e ssh . user@hostname:~/tmp
-# files will be deleted on server after success
-rsync -avzx --delete-after -e ssh . user@hostname:~/tmp
 # with ssh on port 48419
 rsync -avzx -e "ssh -p 48419" . user@hostname:~/tmp
-# full example
-rsync -avzx --progress --human-readable -e "ssh -p 48419" . user@hostname:~/tmp
-# full example (with delete after)
-rsync -avzx --delete-after --progress --human-readable -e "ssh -p 48419" . user@hostname:~/tmp
+# with progress information
+rsync -avzx --progress -e ssh . user@hostname:~/tmp
+# human readable format - kilk/mega/giga bytes instead of bytes
+rsync -avzx --human-readable -e ssh . user@hostname:~/tmp
+# delete files *after* sync is complete
+rsync -avzx --delete-after -e ssh . user@hostname:~/tmp
 # with mac to linux file change encoding
-rsync -avzx --iconv=utf-8-mac,utf-8 --progress --human-readable -e ssh . user@hostname:~/tmp
+rsync -avzx --iconv=utf-8-mac,utf-8 -e ssh . user@hostname:~/tmp
 # with append w/old data in file checksum
-rsync -avzx --append-verify --progress --human-readable -e ssh . user@hostname:~/tmp
+rsync -avzx --append-verify -e ssh . user@hostname:~/tmp
+# protect spaces
+rsync -avzx --protect-args -e ssh . "user@hostname:/homes/michal/tmp with space"
+# exclude files from 'exclude.txt'
+rsync -avzx --exclude-from 'exclude.txt' -e ssh . user@hostname:~/tmp
 ```
 
-Combined
+#### Sync direction
+
+```bash
+# from server to laptop
+rsync [OPTION...] <server-path> <laptop-path>
+# form laptop to server
+rsync [OPTION...] <laptop-path> <server-path>
+```
+
+#### Full example
 
 ```
-rsync -avzx --iconv=utf-8-mac,utf-8 --append-verify --progress --human-readable -e "ssh -p 48419" . user@hostname:~/tmp
+rsync -avzx --iconv=utf-8-mac,utf-8 --append-verify --progress --human-readable --max-size=300mb -e "ssh -p 48419" . user@hostname:~/tmp
+rsync -avzx --append-verify --progress --human-readable --max-size=300mb -e ssh . user@hostname:~/tmp
 ```
 
 On windows ([cwRsync](https://www.itefix.net/cwrsync))
 
 ```bash
-rsync -avzx --progress --human-readable -e "ssh -p 48419 -i c:\ssh\id_rsa" "c/dir/dir/" user@hostname:~/tmp/
+rsync -avzx --append-verify --progress --human-readable -e "ssh -p 48419 -i c:\ssh\id_rsa" "c/dir/dir/" user@hostname:~/tmp/
 ```
 
 ### Notes

@@ -2,12 +2,20 @@ body {
   font-size: 15px;
 }
 
+html {
+  line-height: 1.15em;
+}
+
 pre {
   padding: 0;
 }
 
 pre code {
   font-size: 13px;
+}
+
+table {
+  width: auto;
 }
 
 .hljs {

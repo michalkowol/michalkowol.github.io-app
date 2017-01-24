@@ -11,11 +11,11 @@ tags = ["tech", "linux", "user", "user management"]
 
 * `addgroup groupname` - creates new group
 * `adduser username` - creates new user
-* `usermod -a -G groupname username` - adds existing user to existing group
+* `usermod -a -G groupname1,groupane2 username` - adds existing user to existing group
 * `deluser username` - deletes user
 * `groups username` - list all groups for user
 
-# chmod
+## chmod
 
 | Mode | Name            |
 |------|-----------------|
@@ -46,6 +46,6 @@ tags = ["tech", "linux", "user", "user management"]
 * `chmod -R a-x+X path` - remove the execute permission on all files in a directory tree, while allowing for directory browsing
 * `chmod -R a+X directory` - allowing for directory browsing for all
 
-<style>
-table { width: auto; }
-</style>
+## Links
+
+* [In Unix, how do I change the permissions for a file?](https://kb.iu.edu/d/abdb)
