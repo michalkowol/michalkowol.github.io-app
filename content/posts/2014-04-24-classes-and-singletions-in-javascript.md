@@ -1,34 +1,43 @@
 +++
-draft = false
 date = "2014-04-24"
 title = "\"Classes\" and Singletions in JavaScript"
 description = "How to simulate Object Oriented programming in JavaScript."
 categories = ["development", "javascript"]
-tags = ["development", "javascript", "trait"]
+tags = ["development", "javascript", "oop"]
 +++
 
-In JS there are a lot of way to simulate classes. Here are examples:
+## Overview
+
+Javascript way to simulate Object-Oriented-Programming.
+
+## Classes
+
+In JS there are a lot of way to simulate classes.
+
+### Example 1
 
 ```javascript
 var com = com || {};
 
-com.MTVClass1 = function (videoID) {
-    "use strict";
+com.Video = function (videoID) {
+    'use strict';
     var self = {};
  
     function bar() {
-        return "bar" + videoID;
+        return 'bar' + videoID;
     }
  
     self.foo = function () {
-        return "foo" + bar() + videoID;
+        return 'foo' + bar() + videoID;
     };
  
     return self;
 };
 
-com.MTVClass1("123").foo();
+com.Video('123').foo();
 ```
+
+### Example 2
 
 ```javascript
 var com = com || {};
@@ -36,91 +45,99 @@ var com = com || {};
 (function () {
     'use strict';
  
-    com.MTVClass2 = function (videoID) {
+    com.Video = function (videoID) {
         this.videoID = videoID;
     };
  
     function bar() {
-        return "bar"; // does not have access to videoID
+        return 'bar'; // it does not have access to videoID
     }
  
-    com.MTVClass2.prototype.foo = function () {
-        return "foo" + bar() + this.videoID;
+    com.Video.prototype.foo = function () {
+        return 'foo' + bar() + this.videoID;
     };
 }());
 
-new com.MTVClass2("1234").foo();
+new com.Video('123').foo();
 ```
+
+### Example 3
 
 ```javascript
 var com = com || {};
  
-com.MTVClass3 = (function () {
+com.Video = (function () {
     'use strict';
  
-    function MTVClass3(videoID) {
+    function Video(videoID) {
         this.videoID = videoID;
     }
  
     function bar() {
-        return "bar";  // does not have access to videoID
+        return 'bar';  // it does not have access to videoID
     }
  
-    MTVClass3.prototype.foo = function () {
-        return "foo" + bar() + this.videoID;
+    Video.prototype.foo = function () {
+        return 'foo' + bar() + this.videoID;
     };
  
-    return MTVClass3;
+    return Video;
 }());
 
-new com.MTVClass3("123").foo();
+new com.Video('123').foo();
 ```
+
+### Example 4
 
 ```javascript
 var com = com || {};
  
-com.MTVClass4 = (function () {
+com.Video = (function () {
     'use strict';
  
-    function MTVClass4(videoID) {
+    function Video(videoID) {
         this.videoID = videoID;
     }
  
     function bar(self) {
-        return "bar" + self.videoID;
+        return 'bar' + self.videoID;
     }
  
-    MTVClass4.prototype.foo = function () {
-        return "foo" + bar(this) + this.videoID;
+    Video.prototype.foo = function () {
+        return 'foo' + bar(this) + this.videoID;
     };
  
-    return MTVClass4;
+    return Video;
 }());
 
-new com.MTVClass4("123").foo();
+new com.Video('123').foo();
 ```
+
+In my option apporach from Example 1 is the best one. In Example 2 and Example 3 we do not have access to class fields. Example 1 has some small performance issue, but remeber:
+
+> Premature optimization is the root of all evil.
+
+## Objects
+
+Sometimes you need to create Singleton Objects. It is a good way to store procedures - in example factory methods.
 
 ```javascript
 var com = com || {};
  
-com.MTVObject = (function () {
-    "use strict";
+com.VideoObject = (function () {
+    'use strict';
     var self = {};
  
     function bar() {
-        return "bar";
+        return 'bar';
     }
  
     self.foo = function () {
-        return "foo" + bar();
+        return 'foo' + bar();
     };
  
     return self;
 }());
 
-com.MTVObject.foo();
+com.VideoObject.foo();
 ```
-
-In my option `MTVClass1.js` approach is the best one. `MTVClass1.js` has similar concept like `MTVObject.js`. In `MTVClass2.js` and `MTVClass3.js` you do not have access to class fields. `MTVClass1.js` has some small performance issue, but remeber:
-
-> Premature optimization is the root of all evil.

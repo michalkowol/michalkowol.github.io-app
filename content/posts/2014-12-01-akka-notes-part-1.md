@@ -1,13 +1,12 @@
 +++
-draft = false
 date = "2014-12-01"
 title = "Akka (notes, part 1)"
 description = "Notes from \"Fast Track to Akka\"."
-categories = ["development", "scala"]
-tags = ["development", "scala", "akka"]
+categories = ["development", "scala", "jvm"]
+tags = ["development", "scala", "jvm", "akka"]
 +++
 
-### Akka traits
+## Akka traits
 
 ![akka traits](/img/akka-notes/reactive-traits.svg)
 
@@ -20,7 +19,7 @@ Akka has 4 main traits. Those are:
 
 Please see [Reactive Manifesto](http://www.reactivemanifesto.org/) for more information.
 
-### Concurrency vs parallelism
+## Concurrency vs parallelism
 
 * Definition 1
   * **Concurrency** is when two tasks can start, run, and complete in overlapping time periods. It doesn't necessarily mean they'll ever both be running at the same instant. Eg. multitasking on a single-core machine.
@@ -40,7 +39,7 @@ Example
 
 Source: [joearms.github.io](http://joearms.github.io/2013/04/05/concurrent-and-parallel-programming.html).
 
-### Actor, ActorRef
+## Actor, ActorRef
 
 ![Actor with Mailbox](/img/akka-notes/actor-ref.png)
 
@@ -54,7 +53,7 @@ Source: [joearms.github.io](http://joearms.github.io/2013/04/05/concurrent-and-p
 * Actors could have mutable state (but rember not to share mutable state!).
 * Messages must be immutable.
 
-### How to handle "unhandled" messages
+## How to handle "unhandled" messages
 
 If in receive block we do not handle some message, this message will be dropped (and maybe logged). We can use `unhandled` method to do something with messages not handled in receive block.
 
@@ -62,7 +61,7 @@ If in receive block we do not handle some message, this message will be dropped 
 override def unhandled(message: Any): Unit = ???
 ```
 
-### Top-Level Actor
+## Top-Level Actor
 
 If you create top-level actors, use factory methods - it will simplify testing. Always give name to your top-level actors.
 
@@ -71,7 +70,7 @@ val topLevelActor = createTopLevelActor()
 def createTopLevelActor(): ActorRef = system.actorOf(TopLevel.props, "top-level")
 ```
 
-### Message protocol
+## Message protocol
 
 * Defince your message protocol in the companion object of the actor.
 * If you use message protocol from other actor, use actor name as prefix to this message - this will make code more readable.
@@ -100,7 +99,7 @@ class BarActor extends Actor {
 }
 ```
 
-### Actor DSL
+## Actor DSL
 
 To create anonymous actoes we can use [Actor DSL](http://doc.akka.io/docs/akka/2.3.0-RC1/scala/actordsl.html). Here, `actor` takes the role of either `system.actorOf` or `context.actorOf`. It takes an implicit `ActorRefFactory` and creates the new `Actor`.
 
@@ -114,9 +113,9 @@ val a = actor(new Act {
 })
 ```
 
-### Best practices
+## Best practices
 
-* Always create `Props` factory - the best place for that is in companion object (see: [Actors — Akka Documentation](http://doc.akka.io/docs/akka/snapshot/scala/actors.html)).
+* Always create `Props` factory - the best place for that is in companion object (see: [Actors â€” Akka Documentation](http://doc.akka.io/docs/akka/snapshot/scala/actors.html)).
 * Put Companion Object before you class.
 * Use `sender()` **with** parentheses. It is function, not val and you have to rember about it. It can be very tricky when `sender()` will be execute in other thread - in example in `Future`.
 

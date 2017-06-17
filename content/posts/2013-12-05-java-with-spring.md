@@ -1,13 +1,104 @@
 +++
-draft = false
 date = "2013-12-05"
 title = "Java with Spring"
-description = "How to use Spring for Dependency Injection. XML Beans. Different DI scopes."
-categories = ["development", "java"]
-tags = ["development", "java", "spring", "bean"]
+description = "How to use Spring for Dependency Injection."
+categories = ["development", "java", "jvm"]
+tags = ["development", "java", "jvm", "spring", "bean"]
 +++
 
-## Simple example:
+## Overview
+
+Post bellow refers to the old version of Spring. In modern Spring application you don't need to write xml files. You can do almost everything from java code.
+
+## Example
+
+```java
+interface Fruit {
+    String eat();
+
+    String getName();
+}
+
+interface Peelable {
+    String peel();
+}
+
+interface PeelableFruit extends Fruit, Peelable {
+}
+
+class Apple implements PeelableFruit {
+    @Override
+    public String peel() {
+        return "peeling " + getName();
+    }
+
+    @Override
+    public String eat() {
+        return "omnonnom " + getName();
+    }
+
+    @Override
+    public String getName() {
+        return "apple";
+    }
+}
+
+class Peeler {
+    String peel(Peelable peelable) {
+        return peelable.peel() + " with peeler";
+    }
+}
+
+class Juicer {
+    private final Peeler peeler;
+    private final PeelableFruit fruit;
+
+    public Juicer(Peeler peeler, PeelableFruit fruit) {
+        this.peeler = peeler;
+        this.fruit = fruit;
+    }
+
+    public String makeJuice() {
+        return peeler.peel(fruit) + "\n" +
+            "squeezing " + fruit.getName() + "\n" +
+            "Ready!";
+    }
+}
+
+```
+
+`Boot` for examples with xml files:
+
+```java
+class Boot {
+    public static void main(String[] args) {
+        ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
+        Juicer j1 = context.getBean(Juicer.class);
+        Juicer j2 = context.getBean(Juicer.class);
+        System.out.println(j1 == j2);
+    }
+}
+```
+
+And `Boot` for new way:
+
+```java
+@SpringBootApplication
+class Boot {
+    public static void main(String[] args) {
+        ConfigurableApplicationContext context = SpringApplication.run(Boot.class, args);
+        Juicer j1 = context.getBean(Juicer.class);
+        Juicer j2 = context.getBean(Juicer.class);
+        System.out.println(j1 == j2);
+    }
+}
+```
+
+### Singletion scope
+
+Default scope is `singleton`. If you want to use other scopes you need to use annotation `@Scope`.
+
+#### The old, xml-ish way
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -21,88 +112,108 @@ tags = ["development", "java", "spring", "bean"]
         <constructor-arg ref="apple" />
         <constructor-arg ref="peeler" />
     </bean>
-    <bean id="peeler" class="Peeler">
-        <constructor-arg ref="apple" />
-    </bean>
+    <bean id="peeler" class="Peeler"/>
+    
 </beans>
 ```
 
+#### The new way
+
+```java
+@Configuration
+class AppConfig {
+    @Bean
+    PeelableFruit fruit() {
+        return new Apple();
+    }
+
+    @Bean
+    Peeler peeler() {
+        return new Peeler();
+    }
+
+    @Bean
+    Juicer juicer(Peeler peeler, PeelableFruit fruit) {
+        return new Juicer(peeler, fruit);
+    }
+}
+```
+
+#### Result
+
+Result of running `Boot` is `true`. This is because we alwyas get the same instance (the same addedss in memory) of `Juicer`.
+
+### Prototype scope
+
+#### The old, xml-ish way
 
 ```xml
-<!-- ... -->
-<bean id="juicer" class="Juicer" scope="prototype">
-<!-- ... -->
-```
-
-```java
-public interface Fruit {
-    void eat();
-    String getName();
-}
-
-public interface Peelable {
-    void peel();
-}
-
-public class Apple implements Fruit, Peelable {
-    public void peel() { }
-    public void eat() { }
-    String getName() { return "apple"; }
-}
-
-public class Peeler {
-    private final Peelable peelable;
+<?xml version="1.0" encoding="UTF-8"?>
  
-    public Peeler(Peelable peelable) {
-        this.peelable = peelable;
-    }
-}
-
-public class Juicer {
-    private final Peelable peelable;
-    private final Peeler peeler;
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
  
-    public Juicer(Peelable peelable, Peeler peeler) {
-        this.peelable = peelable;
-        this.peeler = peeler;
-    }
-}
+    <bean id="apple" class="Apple" />
+    <bean id="juicer" class="Juicer" scope="prototype">
+        <constructor-arg ref="apple" />
+        <constructor-arg ref="peeler" />
+    </bean>
+    <bean id="peeler" class="Peeler"/>
+    
+</beans>
 ```
+
+#### The new way
 
 ```java
-public class MainAppPrototype {
-    public static void main(String[] args) {
-        ApplicationContext context = new ClassPathXmlApplicationContext("beans_prototype.xml");
-        Juicer j1 = context.getBean(Juicer.class);
-        Juicer j2 = context.getBean(Juicer.class);
-        System.out.println(j1 == j2);
+@Configuration
+class AppConfig {
+    @Bean
+    PeelableFruit fruit() {
+        return new Apple();
+    }
+
+    @Bean
+    Peeler peeler() {
+        return new Peeler();
+    }
+
+    @Bean
+    @Scope("prototype")
+    Juicer juicer(Peeler peeler, PeelableFruit fruit) {
+        return new Juicer(peeler, fruit);
     }
 }
 ```
 
-```java
-public class MainAppSingleton {
-    public static void main(String[] args) {
-        ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
-        Juicer j1 = context.getBean(Juicer.class);
-        Juicer j2 = context.getBean(Juicer.class);
-        System.out.println(j1 == j2);
-    }
-}
-```
+#### Result
 
-`MainAppSingleton` execution result: `true`.
-
-`MainAppPrototype` execution result: `false`.
+Result of running `Boot` is `false`. This is because we alwyas get the new instances of `Juicer`.
 
 ## Resolving conflicts in constructor's arguments.
 
-```xml
-<bean id="test" class="Test">
-    <constructor-arg value="xhajs" />
-    <constructor-arg value="md5" />
-</bean>
+```java
+class PasswordWithType {
+    private String type;
+    private String password;
+
+    PasswordWithType(String type, String password) {
+        this.type = type;
+        this.password = password;
+    }
+
+    String getPassword() {
+        return password;
+    }
+
+    String getType() {
+        return type;
+    }
+}
 ```
+
+### The old, xml-ish way
 
 ```xml
 <bean id="test" class="Test">
@@ -112,36 +223,72 @@ public class MainAppSingleton {
 ```
 
 ```java
-public class Test {
- 
-    private String type;
-    private String password;
- 
-    public Test(String type, String password) {
-        this.type = type;
-        this.password = password;
-    }
-     
-    public String getPassword() {
-        return password;
-    }
-     
-    public String getType() {
-        return type;
+class Boot {
+    public static void main(String[] args) {
+        ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
+        PasswordWithType passwordWithType = context.getBean(PasswordWithType.class);
+        System.out.println("type=" + passwordWithType.getType());
+        System.out.println("password=" + passwordWithType.getPassword());
     }
 }
 ```
 
-With `bean1.xml`:
-```
-Test.type = xhajs
-Test.password= md5
+And result:
+
+```text
+type = md5
+password= xhajs
 ```
 
-With `bean2.xml`:
+Note that we used `name` attribute in the xml. If didn't use, we would end `type = xhajs`.
+
+### The new way
+
+```java
+@Configuration
+class AppConfig {
+    @Bean
+    String type() {
+        return "md5";
+    }
+
+    @Bean
+    String password() {
+        return "xhajs";
+    }
+
+    @Bean
+    PasswordWithType PasswordWithType(String type, String password) {
+        return new PasswordWithType(type, password);
+    }
+}
 ```
-Test.type = md5
-Test.password= xhajs
+
+```java
+@SpringBootApplication
+class Boot {
+    public static void main(String[] args) {
+        ConfigurableApplicationContext context = SpringApplication.run(Boot.class, args);
+        PasswordWithType passwordWithType = context.getBean(PasswordWithType.class);
+        System.out.println("type=" + passwordWithType.getType());
+        System.out.println("password=" + passwordWithType.getPassword());
+    }
+}
+```
+
+And result:
+
+```text
+type = md5
+password= xhajs
+```
+
+If we use java to configure our app we do not have to use names. Spring is smart enought to figure it out base on name of the methods in `@Configurotion` classes.
+
+If we want tou specify specific name we could use `javax.inject.Named` annotation - example `@Named("type")`. We need to add that dependency:
+
+```gradle
+compile 'javax.inject:javax.inject:1'
 ```
 
 ## Factories
@@ -228,7 +375,7 @@ public class MainApp {
 
 Result:
 
-```
+```text
 Eating a banana: omomom
 ```
 
@@ -242,7 +389,7 @@ Plum with name:
 
 Result:
 
-```
+```text
 Eating a plum sliwka: omomom
 ```
 
@@ -256,6 +403,6 @@ Plum by name using createFruit method:
 
 Result:
 
-```
+```text
 Eating a plum defaultName: omomom
 ```

@@ -1,13 +1,12 @@
 +++
-draft = false
 date = "2014-11-28"
 title = "Scala (notes)"
 description = "Notes from \"Fast Track to Scala\"."
-categories = ["development", "scala"]
-tags = ["development", "scala"]
+categories = ["development", "scala", "jvm"]
+tags = ["development", "scala", "jvm"]
 +++
 
-### Functions without parameters
+## Functions without parameters
 
 ```scala
 def foo: String = ???
@@ -16,17 +15,17 @@ def bar(): String = ???
 
 The first one is better, bacause you can easly replace it with `val`. In fact, otheres developers shouldn't know if you use `val` or `def`. It should be transparent (you shouldn't use parentheses).
 
-### Default parameters
+## Default parameters
 
 ```scala
 class Welcome(message: String = "default")
 ```
 
-### Public API
+## Public API
 
 If we define public API, all methods and parameters should have explicite type.
 
-### Operators
+## Operators
 
 ```scala
 1 + 3 == (1).+(3)
@@ -38,7 +37,7 @@ To be consisten:
 * all operators like `+`, `!`, `-`, etc. should be used with infix notation,
 * in other cases we **should** use dot notation.
 
-### Named parameters
+## Named parameters
 
 ```
 case class User(name: String, lastname: String)
@@ -47,11 +46,11 @@ User(name = "Michal", lastname = "Kowol") == User(lastname = "Kowol", name = "Mi
 
 When we have a lot of parameters (especially with the same type - integers and strings), we should used named parameters. It makes code more readable and more expressible.
 
-### Imports in code's block are ok
+## Imports in code's block are ok
 
 If you need specific import only in one function, import it in function body.
 
-### Private access modifiers in Scala
+## Private access modifiers in Scala
 
 ```scala
 package com.michal
@@ -99,30 +98,30 @@ Extending `App` is code for prototyping. In production you should use `main`. Wh
 * you don't hava access to args,
 * <blockquote>It should be noted that this trait is implemented using the DelayedInit functionality, which means that fields of the object will not have been initialized before the main method has been executed.</blockquote>
 
-### `copy` method in case classes
+## `copy` method in case classes
 
 ```scala
 case class User(name: String, age: Int)
 User(name = "Bob", age = 10).copy(age = 40) // User(Bob, 40)
 ```
 
-### List vs Vector
+## List vs Vector
 
-#### List
+### List
 
 List has only pointer to first element - it adds very fast to head of list. To add element to end of list it has to iterate throught all elements (`O(n)`).
 
-#### Vector
+### Vector
 
 All operations are constant in time (even putting element in the middile of collection).
 
-##### Performance characteristics
+### Performance characteristics
 
 ![performance characteristics](/img/scala-notes/performance.png)
 
 [Performance characteristics](Performance characteristics)
 
-### `Seq` is mutable!
+## `Seq` is mutable!
 
 ```scala
 val s = Array(1 ,2, 3) // s: Array[Int] = Array(1, 2, 3)
@@ -134,7 +133,7 @@ testCase(s) // res2: Seq[Int] = WrappedArray(7, 2, 3)
 
 There is at least one mutable subtype of `Seq`: `WrappedArray`. To be sure sequence is immutable use `scala.collection.immutable.Seq`.
 
-### Future
+## Future
 
 ```scala
 import scala.concurrent.{Await, Future}
@@ -178,7 +177,7 @@ for {
 
 `<-` will "unpack", `=` is simple assigment.
 
-### `Try` object/trait
+## `Try` object/trait
 
 ```scala
 import scala.util.Try
@@ -192,7 +191,7 @@ f.map(_ + 200) // Failure(java.lang.NumberFormatException ...)
 
 In [scalactic](http://www.scalactic.org/) you can use `String Or ErrorMessage` (`Good(...)`, `Bad(...)` subclasses).
 
-### `if` in for-comprehension
+## `if` in for-comprehension
 
 ```scala
 var ll = List(List(1, 2, 3), List(2, 3), List(1), List(9), List(11, 1))
@@ -206,18 +205,18 @@ for {
 You can use `if` in for-comprehension.
 Every for-comprehension can be replaced with `flatMap` and `map` (outer iteration is `flatMap`).
 
-### `filter` vs `withFilter`
+## `filter` vs `withFilter`
 
 `filter` always returns collections. `withFilter` returns generator. You can "join" join many generators.
 
 You should `withFilter` when you have many filters.
 
-### Class modifiers
+## Class modifiers
 
 * `final class Animal` you cannnot extend Animal
 * `sealed` all subtypes must be defined in this file. `sealed` should be define when you use [ADT (algebraic data types)](http://en.wikipedia.org/wiki/Algebraic_data_type). `sealed` is very helpfull in pattern matching.
 
-### Traits linearization
+## Traits linearization
 
 ```scala
 trait A {
@@ -239,7 +238,7 @@ new BC().m // c
 new CB().m // b
 ```
 
-### Const Pattern Mattching
+## Const Pattern Mattching
 
 ```scala
 def pattern(value: String, consToMatch: String): String = {
@@ -258,7 +257,7 @@ pattern("3", "3") // !!!
 pattern("3", "xxx") // ???
 ```
 
-### Others
+## Others
 
 * In subclass you can replace `def` with `val`.
 * There is type `Either` and `Options` - very usefull to handle errors or null pointers.

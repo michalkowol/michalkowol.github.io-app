@@ -1,15 +1,16 @@
 +++
-draft = true
 date = "2016-11-03"
 title = "Midnight Commander"
-description = "Midnight Commander - how to use."
-categories = ["random", "tech", "howto", "todo"]
-tags = ["random", "tech", "howto", "mc", "midnight commander"]
+description = "Midnight Commander - is a visual file manager. It is great tool, but it is quite hard to use."
+categories = ["tech", "howto"]
+tags = ["tech", "howto", "mc", "midnight commander"]
 +++
 
-https://www.midnight-commander.org/
+## Overview
 
-## Shorcuts
+[Midnight Commander](https://www.midnight-commander.org/) is based on versatile text interfaces, such as Ncurses or S-Lang, which allows it to work on a regular console, inside an X Window terminal, over SSH connections and all kinds of remote shells.
+
+### Shorcuts
 
 * `Ctrl + x, q` quick preview (x = comman, q = quick view)
 * `Shift + F6` rename file 
@@ -19,7 +20,7 @@ https://www.midnight-commander.org/
 * `Esc + i` open same directory in another panel
 * `Ctrl + r` refresh
 
-## Configure `open` as View/Open
+### Configure `open` as View/Open
 
 Menu: `Command > Edit extension file`
 
